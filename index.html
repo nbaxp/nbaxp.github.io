@@ -14,7 +14,7 @@
         var app = new Vue({
             el: '#app',
             data: {
-                md: 'README.md'
+                md: ''
             },
             mounted: function () {
                 $('#app').on('click', 'a', function () {
@@ -23,8 +23,11 @@
                 });
                 var app = this;
                 window.onhashchange = app.update;
-                if (!window.location.hash) {
-                    window.location.hash = app.md;
+                if (window.location.hash === '') {
+                    window.location.hash = "README.md"
+                }
+                else {
+                    app.update();
                 }
             },
             watch: {
