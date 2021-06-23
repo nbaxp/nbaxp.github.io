@@ -17,21 +17,24 @@
                 md: 'README.md'
             },
             mounted: function () {
-                var app = this;
                 $('#app').on('click', 'a', function () {
                     app.md = $(this).attr('href');
                     return false;
                 });
-                this.update(app.md);
+                var app = this;
+                window.onhashchange = app.update;
+                if (!window.location.hash) {
+                    window.location.hash = app.md;
+                }
             },
             watch: {
                 md: function (md) {
-                    this.update(md);
+                    window.location.hash = md;
                 }
             },
             methods: {
-                update: function (md) {
-                    fetch(md)
+                update: function () {
+                    fetch(window.location.hash)
                         .then(o => o.text())
                         .then(o => {
                             document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
