@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>nbaxp.github.io</title>
+</head>
+<body>
+    <div class="app">
+        {{html}}
+    </div>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/commonmark/commonmark.min.js"></script>
+    <script src="lib/vue/vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                md: 'README.md'
+            },
+            mounted:function(){
+                var app = this;
+                $('#app').on('click','a',function(){
+                    app.md=$(this).attr('href');
+                })
+            },
+            computed: {
+                html: function () {
+                    fetch(this.md)
+                        .then(function (response) {
+                            console.log(response);
+                            return new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(response));
+                        });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
