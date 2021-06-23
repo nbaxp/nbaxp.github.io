@@ -23,9 +23,9 @@
                     app.md = $(this).attr('href');
                 })
             },
-            computed: {
+            async computed: {
                 html: function () {
-                    return fetch(this.md)
+                    return await fetch(this.md)
                         .then(o => o.text())
                         .then(o => new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o)));
                 }
