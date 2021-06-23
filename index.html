@@ -24,7 +24,7 @@
                 })
             },
             computed: {
-                async html: function () {
+                html: async function () {
                     return await fetch(this.md)
                         .then(o => o.text())
                         .then(o => new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o)));
