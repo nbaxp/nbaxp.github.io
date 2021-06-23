@@ -6,7 +6,6 @@
 
 <body>
     <div id="app">
-        {{html}}
     </div>
     <script src="lib/jquery/jquery.min.js"></script>
     <script src="lib/commonmark/commonmark.min.js"></script>
@@ -25,9 +24,10 @@
             },
             watch: {
                 md: function (md) {
+                    var app = this;
                     fetch(md)
                         .then(o => o.text())
-                        .then(o => document.getElementById("app").innerHTML=new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o)));
+                        .then(o => this.innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o)));
                 }
             }
         });
