@@ -19,7 +19,7 @@
                     });
             }
         };
-        $('#app').on('click', "a[name$='.md']", function () {
+        $('#app').on('click', "a[href$='.md']", function () {
             window.location.hash = $(this).attr('href');
             return false;
         });
