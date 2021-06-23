@@ -18,15 +18,16 @@
             },
             mounted: function () {
                 var app = this;
+                window.onhashchange = this.update(window.localStorage.hash);
                 $('#app').on('click', 'a', function () {
-                    app.md = $(this).attr('href');
+                    window.location.hash = $(this).attr('href');
                     return false;
                 });
-                this.update(app.md);
+
             },
             watch: {
                 md: function (md) {
-                    this.update(md);
+                    window.location.hash = md;
                 }
             },
             methods: {
