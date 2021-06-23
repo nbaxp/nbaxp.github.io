@@ -18,7 +18,7 @@
             },
             mounted: function () {
                 var app = this;
-                window.onhashchange = this.update(window.localStorage.hash);
+                window.onhashchange = this.update;
                 $('#app').on('click', 'a', function () {
                     window.location.hash = $(this).attr('href');
                     return false;
@@ -31,8 +31,8 @@
                 }
             },
             methods: {
-                update: function (md) {
-                    fetch(md)
+                update: function () {
+                    fetch(window.location.hash)
                         .then(o => o.text())
                         .then(o => {
                             document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
