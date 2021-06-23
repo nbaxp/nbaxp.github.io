@@ -14,25 +14,24 @@
         var app = new Vue({
             el: '#app',
             data: {
-                md: location.hash || 'README.md'
+                md: 'README.md'
             },
             mounted: function () {
                 var app = this;
-                window.onhashchange = this.update;
                 $('#app').on('click', 'a', function () {
-                    window.location.hash = $(this).attr('href');
+                    app.md = $(this).attr('href');
                     return false;
                 });
-                window.location.hash = app.md;
+                this.update(app.md);
             },
             watch: {
                 md: function (md) {
-                    window.location.hash = md;
+                    this.update(md);
                 }
             },
             methods: {
-                update: function () {
-                    fetch(window.location.hash)
+                update: function (md) {
+                    fetch(md)
                         .then(o => o.text())
                         .then(o => {
                             document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
