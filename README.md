@@ -4,7 +4,8 @@
 
 ## 常用链接
 
-* [GitHub 风格 Markdown 标准](https://github.github.com/gfm/) 
+* [GitHub Markdown 格式](https://github.github.com/gfm/) 
+* [mermaid 文档](https://mermaid-js.github.io/mermaid/#/)
 
 ## mermaid 流程图测试
 
