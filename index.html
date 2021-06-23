@@ -1,7 +1,9 @@
 <html>
+
 <head>
     <title>nbaxp.github.io</title>
 </head>
+
 <body>
     <div id="app">
         {{html}}
@@ -15,22 +17,21 @@
             data: {
                 md: 'README.md'
             },
-            mounted:function(){
+            mounted: function () {
                 var app = this;
-                $('#app').on('click','a',function(){
-                    app.md=$(this).attr('href');
+                $('#app').on('click', 'a', function () {
+                    app.md = $(this).attr('href');
                 })
             },
             computed: {
                 html: function () {
-                    fetch(this.md)
-                        .then(function (response) {
-                            console.log(response);
-                            return new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(response));
-                        });
+                    return fetch(this.md)
+                        .then(o => o.text())
+                        .then(o => new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(response)));
                 }
             }
         });
     </script>
 </body>
+
 </html>
