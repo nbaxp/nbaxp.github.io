@@ -20,11 +20,16 @@
                 var app = this;
                 $('#app').on('click', 'a', function () {
                     app.md = $(this).attr('href');
-                })
+                });
+                update(app.md);
             },
             watch: {
                 md: function (md) {
-                    var app = this;
+                    update(md);
+                }
+            },
+            methods:{
+                update:function(md){
                     fetch(md)
                         .then(o => o.text())
                         .then(o => console.log(o))
