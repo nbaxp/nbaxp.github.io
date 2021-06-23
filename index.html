@@ -9,16 +9,17 @@
     </div>
     <script src="lib/jquery/jquery.min.js"></script>
     <script src="lib/commonmark/commonmark.min.js"></script>
-    <script src="lib/vue/vue.min.js"></script>
     <script>
         window.onhashchange = function () {
-            fetch(window.location.hash.substr(1))
-                .then(o => o.text())
-                .then(o => {
-                    document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
-                });
+            if (window.location.hash.length > 1 && window.location.hash.indexOf("#_") !== 0) {
+                fetch(window.location.hash.substr(1))
+                    .then(o => o.text())
+                    .then(o => {
+                        document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
+                    });
+            }
         };
-        $('#app').on('click', 'a', function () {
+        $('#app').on('click', "a[name$='.md']", function () {
             window.location.hash = $(this).attr('href');
             return false;
         });
