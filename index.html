@@ -25,7 +25,7 @@
             },
             watch: {
                 md: function (md) {
-                    return await fetch(md)
+                    fetch(md)
                         .then(o => o.text())
                         .then(o => new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o)));
                 }
