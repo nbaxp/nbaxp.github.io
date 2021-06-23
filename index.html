@@ -15,12 +15,22 @@
     <script src="lib/commonmark/commonmark.min.js"></script>
     <script src="lib/mermaid/mermaid.min.js"></script>
     <script>
+        var config = {
+            startOnLoad: true,
+            theme: 'forest',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true
+            }
+        };
+        mermaid.initialize(config);
         window.onhashchange = function () {
             if (window.location.hash.length > 1 && window.location.hash.indexOf("#_") !== 0) {
                 fetch(window.location.hash.substr(1))
                     .then(o => o.text())
                     .then(o => {
                         document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
+                        window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
                     });
             }
         };
