@@ -27,7 +27,7 @@
                     var app = this;
                     fetch(md)
                         .then(o => o.text())
-                        .then(o => this.innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o)));
+                        .then(o => document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o)));
                 }
             }
         });
