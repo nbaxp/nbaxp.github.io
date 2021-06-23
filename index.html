@@ -36,7 +36,6 @@
                         .then(o => o.text())
                         .then(o => {
                             document.getElementById('app').innerHTML = new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
-                            window.location.hash = md;
                         });
                 }
             }
