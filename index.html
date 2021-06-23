@@ -20,6 +20,7 @@
                 var app = this;
                 $('#app').on('click', 'a', function () {
                     app.md = $(this).attr('href');
+                    return false;
                 });
                 this.update(app.md);
             },
