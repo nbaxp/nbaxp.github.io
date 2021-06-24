@@ -19,12 +19,32 @@
 </head>
 
 <body>
-    <div id="app" class="container-lg px-3 my-5 markdown-body gitpages">
-    </div>
+    <div id="app" class="container-lg px-3 my-5 markdown-body gitpages"></div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@2.1.2/lib/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@8.10.2/dist/mermaid.min.js"></script>
     <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+    <script>
+        function markdownToHtml(input) {
+            return marked(input);
+        }
+
+        function fix() {
+            window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+            $('li:has(>input)').addClass('task-list-item')
+                .parent('ul').addClass('contains-task-list')
+                .find('input[type="checkbox"]').addClass('task-list-item-checkbox');
+            MathJax.typeset();
+        }
+
+        //mermaid
         var config = {
             startOnLoad: true,
             theme: 'forest',
@@ -34,17 +54,23 @@
             }
         };
         mermaid.initialize(config);
-        const engine = "marked";
-        function markdownToHtml(input) {
-            if (engine === "commonmark") {
-                return new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
+
+        //MathJax
+        //https://www.osgeo.cn/mathjax/options/document.html#document-options
+        MathJax = {
+            options: {
+                skipHtmlTags: [
+                    'script', 'noscript', 'style', 'textarea',
+                    //'pre','code', 
+                    'annotation', 'annotation-xml'
+                ]
+            },
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
             }
-            return marked(input);
-        }
-        function fix() {
-            window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
-            $('li:has(>input)').addClass('task-list-item').parent('ul').addClass('contains-task-list').find('input[type="checkbox"]').addClass('task-list-item-checkbox');
-        }
+        };
+
+        //onhashchange
         window.onhashchange = function () {
             if (window.location.hash.length > 1 && window.location.hash.indexOf("#_") !== 0) {
                 fetch(window.location.hash.substr(1))
@@ -55,10 +81,14 @@
                     });
             }
         };
+
+        //onclick
         $('#app').on('click', "a[href$='.md']", function () {
             window.location.hash = $(this).attr('href');
             return false;
         });
+
+        //onload
         if (window.location.hash === '') {
             window.location.hash = "README.md"
         }
