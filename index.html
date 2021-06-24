@@ -5,11 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://nbaxp.github.io/assets/css/style.css">
+    <style>
+        .task-list-item {
+            list-style-type: none;
+        }
+
+        .task-list-item-checkbox {
+            margin: 0 .2em .25em -1.6em;
+            vertical-align: middle;
+        }
+    </style>
     <title>nbaxp.github.io</title>
 </head>
 
 <body>
-    <div id="app" class="container-lg px-3 my-5 markdown-body">
+    <div id="app" class="container-lg px-3 my-5 markdown-body gitpages">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@2.1.2/lib/marked.min.js"></script>
@@ -25,13 +35,15 @@
         };
         mermaid.initialize(config);
         const engine = "marked";
-        function markdownToHtml(input)
-        {
-            if(engine==="commonmark")
-            {
+        function markdownToHtml(input) {
+            if (engine === "commonmark") {
                 return new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(o));
             }
             return marked(input);
+        }
+        function fix() {
+            window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+            $('li:has(>input)').addClass('task-list-item').parent('ul').addClass('contains-task-list').find('input[type="checkbox"]').addClass('task-list-item-checkbox');
         }
         window.onhashchange = function () {
             if (window.location.hash.length > 1 && window.location.hash.indexOf("#_") !== 0) {
@@ -39,7 +51,7 @@
                     .then(o => o.text())
                     .then(o => {
                         document.getElementById('app').innerHTML = markdownToHtml(o);
-                        window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+                        fix();
                     });
             }
         };
