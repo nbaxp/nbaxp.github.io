@@ -22,7 +22,14 @@
     <div id="app" class="container-lg px-3 my-5 markdown-body gitpages"></div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@2.1.2/lib/marked.min.js"></script>
+    <!-- js-sequence-diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@rokt33r/js-sequence-diagrams@2.0.6-2/dist/sequence-diagram-min.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@8.10.2/dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.15.0/flowchart.min.js"></script>
     <script>
         MathJax = {
             tex: {
@@ -38,6 +45,23 @@
 
         function fix() {
             window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+            //http://flowchart.js.org/
+            $('.language-flow').each(function () {
+                flowchart.parse($(this).text())
+                    .drawSVG($(this).empty()[0], {
+                        'font-family':
+                            'Operator Mono A, Operator Mono B, Fira Code, Menlo, Monaco, monospace',
+                        'line-length': 40,
+                    });
+            });
+            //https://github.com/bramp/js-sequence-diagrams
+            $('.language-sequence').each(function () {
+                Diagram.parse($(this).text())
+                    .drawSVG($(this).empty()[0], {
+                        theme: 'simple'
+                    });
+            });
+            //github task list 
             $('li:has(>input)').addClass('task-list-item')
                 .parent('ul').addClass('contains-task-list')
                 .find('input[type="checkbox"]').addClass('task-list-item-checkbox');
