@@ -1,33 +1,19 @@
-## 单页链接测试
-[test](test.md)
+# 资料库
 
+## 目录 
+1. [markdown](markdown.md)
+1. [git](git.md)
+1. [测试](test.md)
 
-## 常用链接
+## 待办
 
-* [GitHub Markdown 格式](https://github.github.com/gfm/) 
-* [mermaid 文档](https://mermaid-js.github.io/mermaid/#/)
-
-## mermaid 流程图测试
-
-```mermaid
-graph TD;A-->B;A-->C;B-->D;C-->D;
-
-```
-
-## markdown 格式测试
-
-### 单体应用改造：
-
-1. 有状态服务改为无状态服务：使用 jwt bearer 认证
-1. 本地配置文件改为配置中心：使用 nacos 等
-1. 本地日志改为日志中心：使用 elk 等
-
-### 服务间调用改造
-
-1. 从配置中读取服务中心地址
-1. 从服务中心读取API地址列表并实时接收API列表的更新
-
-### 前后端分离改造
-
-1. 前端单独部署
-1. 通过网关统一访问后端API
+- [x] github.io上使用和github同样的功能
+  - [x] 使用cdn加速：[jsdelivr](https://www.jsdelivr.com/)
+  - [x] 添加 index.html 用于github.io域名访问时动态加载markdown文件，默认加载README.md 
+  - [x] javascript解析markdown：[marked](https://marked.js.org/)(commonmark不支持 [] 转 input checkbox)
+  - [x] markdown流程图支持：[mermaid](https://github.com/mermaid-js/mermaid)
+- [ ] markdown笔记
+- [ ] git笔记
+  - [ ] git 基础
+  - [ ] git 分支
+  - [ ] git flow
