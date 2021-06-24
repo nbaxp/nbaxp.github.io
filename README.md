@@ -12,8 +12,7 @@
   - [x] 添加 index.html 用于github.io域名访问时动态加载markdown文件，默认加载README.md 
   - [x] javascript解析markdown：[marked](https://marked.js.org/)(commonmark不支持复选框)
   - [x] markdown流程图支持：[mermaid](https://github.com/mermaid-js/mermaid)
-  - [x] 数学公式：[MathJax]()，写在行内代码或代码块内避免markdown解析冲突
-  - [ ] 思维导图：
+  - [x] 数学公式：[MathJax](https://github.com/mathjax/MathJax)，写在行内代码或代码块内避免markdown解析冲突
 - [ ] markdown
 - [ ] git
   - [ ] git 基础
