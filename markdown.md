@@ -5,13 +5,15 @@
 1. [CommonMark Spec](https://spec.commonmark.org/)
 1. [GitHub Flavored Markdown Spec](https://github.github.com/gfm/)
 
-## 二、简介
+## 二、概述
 
-转义字符：
+1. "\*"、"\+"、"\-"在MarkDown中表示相同的语法。
+2. 当需要原样输出Markdown的语法符号时，使用"\\"转义。
+3. Markdown的语法符号通常应用在行首且不需要闭合。通常会在Markdown的语法符号后加空格。
 
 ## 三、示例
 
-以\`符号开头结尾的是内联代码，以\`\`\`开头结尾的是代码块，示例代码包含在如下的代码块中
+以\`符号开头结尾的是内联代码，以\`\`\`开头结尾的是代码块，示例代码包含在如下的代码块中：
 
 ```markdown
 一级标题
