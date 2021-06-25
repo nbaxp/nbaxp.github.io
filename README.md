@@ -15,7 +15,7 @@
   - [x] [mermaid](https://github.com/mermaid-js/mermaid)
   - [x] [flowchart.js](https://github.com/adrai/flowchart.js)
   - [x] [js-sequence-diagrams](https://github.com/bramp/js-sequence-diagrams)
-- [ ] markdown
+- [x] markdown
 - [ ] git
   - [ ] git 基础
   - [ ] git 分支
