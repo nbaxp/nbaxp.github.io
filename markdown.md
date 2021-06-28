@@ -1,6 +1,6 @@
 # Markdown
 
-## 一、参考
+## 一、资料
 1. [Markdown](https://daringfireball.net/projects/markdown/)
 1. [CommonMark Spec](https://spec.commonmark.org/)
 1. [GitHub Flavored Markdown Spec](https://github.github.com/gfm/)

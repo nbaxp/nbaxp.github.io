@@ -22,3 +22,22 @@
   - [ ] git 分支
   - [ ] git flow
 
+## 知识结构
+
+```mermaid
+graph LR
+A(云原生CNC)
+A-->B1(容器)
+A-->B2(服务网格)
+A-->B3(微服务)
+A-->B4(不可变基础设施)
+A-->B5(声明式API)
+click A "cncf.md"
+click B1 "container.md"
+click B2 "servic-emesh.md"
+click B3 "micro-service.md"
+click B4 "immutable-infrastructure.md"
+click B5 "declarative-api.md"
+```
+1. <https://github.com/cncf/toc/blob/main/DEFINITION.md>
+2. <https://raw.githubusercontent.com/cncf/trailmap/master/CNCF_TrailMap_latest.png>
