@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+    traefik:
+        image: traefik:v2.5
+        ports:
+            - 80:80
+            - 443:443
+            - 8080:8080
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            #- ./conf/traefik.yml:/traefik.yml
+        command: 
+            - --api.insecure=true 
+            - --providers.docker=true
+    whoami:
+        image: traefik/whoami
+        labels:
+            - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"

@@ -1,0 +1,1 @@
+docker-compose up -d --scale whoami=2 --remove-orphans
