@@ -14,4 +14,12 @@ api:
 
 providers:
   docker:
-    exposedByDefault: true
+    exposedbydefault: false
+  file:
+    directory: /etc/traefik/dynamic/
+    watch: true
+tls:
+  certificate:
+    - certFile: /etc/traefik/server.crt
+    - keyFile: /etc/traefik/server.key
+    

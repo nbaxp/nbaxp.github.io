@@ -8,11 +8,17 @@ services:
             - 8080:8080
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-            #- ./conf/traefik.yml:/traefik.yml
+            - ./conf:/etc/traefik
         command: 
-            - --api.insecure=true 
-            - --providers.docker=true
+            - --certificatesresolvers.default.acme.tlschallenge=true
+            #- --certificatesresolvers.http.acme.httpchallenge.entrypoint=web
+            # - --certificatesresolvers.tls.acme.tlschallenge=true
+            # - --certificatesresolvers.tls.acme.tlschallenge.entrypoint=websecure
     whoami:
         image: traefik/whoami
         labels:
-            - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+            - traefik.enable=true
+            - traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)
+            - traefik.http.routers.whoami.entrypoints=web,websecure
+            - traefik.http.routers.whoami.tls.certresolver=default
+            #- traefik.http.routers.whoami.http.certresolver=default
