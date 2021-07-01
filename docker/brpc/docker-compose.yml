@@ -1,0 +1,9 @@
+version: "3.8"
+services: 
+    brpc:
+        build: .
+        ports: 
+            - 8000:8000
+        volumes: 
+            - ./incubator-brpc:/temp
+        command: tail -f /dev/null
