@@ -1,9 +1,10 @@
 version: "3.8"
 services: 
-    brpc:
+    #docker-compose up --build
+    #http://cyberplayer.bcelive.com/demo/new/index.html
+    brpc-media-server:
+        image: 76527413/brpc-media-server:latest
         build: .
         ports: 
-            - 8000:8000
-        volumes: 
-            - ./incubator-brpc:/temp
-        command: tail -f /dev/null
+            - 8079:8079
+        entrypoint: tail -f /dev/null
