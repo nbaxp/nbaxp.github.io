@@ -7,12 +7,13 @@ RUN sed -i s/archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
     apt install -y libsnappy-dev libgoogle-perftools-dev libgoogle-glog-dev && \
     apt install -y cmake && \
     rm -rf /var/lib/apt/lists/* && \
-    git clone https://hub.fastgit.org/apache/incubator-brpc.git && cd incubator-brpc && \
+    git clone https://hub.fastgit.org/apache/incubator-brpc.git && \
+    git clone https://hub.fastgit.org/brpc/media-server.git && \
+    cd /incubator-brpc && \
     sh config_brpc.sh --headers=/usr/include --libs=/usr/lib && \
     make && \
     # build media server
-    cd / && \
-    git clone https://hub.fastgit.org/brpc/media-server.git && cd media-server && \
+    cd /media-server && \
     mkdir build && cd build && cmake  -D BRPC_INCLUDE_PATH=/incubator-brpc/output/include -D BRPC_LIB=/incubator-brpc/output/lib/libbrpc.a .. && make -sj4 && \
     # mv and clear
     mkdir /brpc-media-server && \
