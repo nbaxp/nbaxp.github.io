@@ -16,9 +16,11 @@ debian 使用国内源安装包
 FROM ubuntu:18.04
 
 RUN sed -i s/archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
-    #sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
+    sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
     apt update && \
-    #apt install -y git && \
+    apt install -y git && \
+    apt purge -y git && \
+    apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 ```
 
@@ -27,9 +29,11 @@ ubuntu 使用国内源安装包
 FROM debian:buster
 
 RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list && \
-    #sed -i s/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list && \
+    sed -i s/security.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list && \
     apt update && \
-    #apt install -y git && \
+    apt install -y git && \
+    apt purge -y git && \
+    apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
 ```
