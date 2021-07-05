@@ -17,5 +17,5 @@ services:
         ports: 
             - 80:80
         volumes: 
-            - ./html:/usr/share/nginx/html
+            - ./index.html:/usr/share/nginx/html/index.html
         
