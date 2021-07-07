@@ -1,1 +1,0 @@
-docker build --progress=plain -t 76527413/brpc-media-server:latest .
