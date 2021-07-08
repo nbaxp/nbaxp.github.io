@@ -53,16 +53,6 @@
                     <video id="video" muted autoplay controls></video>
                 </div>
             </div>
-            <hr>
-            <h2>wasm flv 低分辨预览</h2>
-            <div class="row" style="text-align: center;">
-                <div class="input-group mt-3">
-                    <input id="mibileUrl" class="form-control" type="text"
-                        value="http://localhost:8080/live/test_mobile.flv">
-                    <button id="playMobile" class="input-group-text">play</button>
-                </div>
-                <canvas id="container" style="margin: 0 auto;"></canvas>
-            </div>
         </div>
     </div>
 
@@ -142,63 +132,6 @@
     <script>
         playFlv();
         playHls();
-    </script>
-    <script src="WXInlinePlayer/index.js"></script>
-    <script>
-        var wxInlineplayer;
-        function playMobile() {
-            if (wxInlineplayer) {
-                wxInlineplayer.stop();
-                wxInlineplayer.destroy();
-                wxInlineplayer = null;
-            }
-            var videoSrc = $('#mibileUrl').val();
-            wxInlineplayer = new WXInlinePlayer({
-                url: videoSrc,
-                $container: $('#container'),
-                hasVideo: true,
-                hasAudio: true,
-                volume: 1.0,
-                muted: true,
-                autoplay: true,
-                loop: true,
-                isLive: false,
-                chunkSize: 128 * 1024,
-                preloadTime: 5e2,
-                bufferingTime: 1e3,
-                cacheSegmentCount: 64,
-                customLoader: null
-            });
-            wxInlineplayer.on('timeUpdate', () => {
-                let currentTime = wxInlineplayer.getCurrentTime();
-                currentTime = currentTime <= 0 ? 0 : currentTime;
-            });
-            wxInlineplayer.on('performance', ({ averageDecodeCost, averageUnitDuration }) => {
-                const prop = averageUnitDuration / averageDecodeCost;
-                if (prop >= 2.0) {
-                    console.log('good performance');
-                } else if (prop < 2.0 && prop >= 1.0) {
-                    console.log('ok, thats fine');
-                } else {
-                    console.log('bad performance');
-                }
-            });
-            wxInlineplayer.play();
-        }
-    </script>
-    <script>
-        if (WXInlinePlayer.isSupport()) {
-            WXInlinePlayer.init({
-                asmUrl: './WXInlinePlayer/prod.all.asm.combine.js',
-                wasmUrl: './WXInlinePlayer/prod.all.wasm.combine.js'
-            });
-            WXInlinePlayer.ready().then(() => {
-                $('#playMobile').click(function () {
-                    playMobile();
-                });
-                playMobile();
-            });
-        }
     </script>
 </body>
 

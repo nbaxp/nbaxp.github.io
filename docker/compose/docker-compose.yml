@@ -1,0 +1,5 @@
+version: "3.8"
+services:
+    compose:
+        image: 76527413/compose-arm64
+        build: .
