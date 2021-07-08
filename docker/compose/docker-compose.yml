@@ -3,3 +3,4 @@ services:
     compose:
         image: 76527413/compose-arm64
         build: .
+        command: tail -f /dev/null

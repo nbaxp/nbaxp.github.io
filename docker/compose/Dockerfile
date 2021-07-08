@@ -1,12 +1,8 @@
 ARG DOCKER_VERSION=19.03
 ARG PYTHON_VERSION=3.7.10
 
-ARG BUILD_ALPINE_VERSION=3.12
-ARG BUILD_CENTOS_VERSION=7
 ARG BUILD_DEBIAN_VERSION=slim-stretch
 
-ARG RUNTIME_ALPINE_VERSION=3.12
-ARG RUNTIME_CENTOS_VERSION=7
 ARG RUNTIME_DEBIAN_VERSION=stretch-slim
 
 ARG DISTRO=debian
@@ -67,9 +63,8 @@ ARG TARGETARCH
 ARG TARGETOS
 COPY --from=build /usr/local/bin/docker-compose /docker-compose-${TARGETOS}-${TARGETARCH}
 
-FROM alpine:${RUNTIME_ALPINE_VERSION} AS runtime-alpine
 FROM debian:${RUNTIME_DEBIAN_VERSION} AS runtime-debian
-FROM centos:${RUNTIME_CENTOS_VERSION} AS runtime-centos
+
 FROM runtime-${DISTRO} AS runtime
 COPY docker-compose-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["sh", "/usr/local/bin/docker-compose-entrypoint.sh"]
