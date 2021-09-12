@@ -14,4 +14,9 @@
 4. 生成ssh公钥：使用 ssh-keygen 命令生成的公钥位于： %USERPROFILE%/.ssh
 5. TortoiseGit 和 git bash 使用相同的 ssh 公钥：设置 TortoiseGit 的 Git.exe Path 为 %programfiles%\Git\bin
 
+windows 下配置行尾
+```
+git config --global core.autocrlf false
+```
+
 ## git flow
