@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)Web\wwwroot\plugins\$(ProjectName)\&quot;&#xD;&#xA;xcopy /Y &quot;$(TargetDir)$(TargetName).Views$(TargetExt)&quot; &quot;$(SolutionDir)Web\wwwroot\plugins\$(ProjectName)\&quot;" />
+  </Target>
+  
+
+
+</Project>
