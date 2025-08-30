@@ -1,0 +1,83 @@
+:root {
+  --vw: 100%;
+  --vh: 240px;
+  --vp-layout-max-width: 100%;
+}
+
+.VPDoc.has-aside .content-container {
+  max-width: 100% !important;
+}
+
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1920px;
+  }
+}
+
+/* 4xl - QHD/4K 宽屏 */
+@media (min-width: 2560px) {
+  .container {
+    max-width: 2560px;
+  }
+}
+
+/* 5xl - 5K/超宽屏 */
+@media (min-width: 3200px) {
+  .container {
+    max-width: 3200px;
+  }
+}
+
+/* 6xl - 6K 屏幕 */
+@media (min-width: 3840px) {
+  .container {
+    max-width: 3840px;
+    /* 4K UHD */
+  }
+}
+
+/* 7xl - 8K 屏幕 */
+@media (min-width: 7680px) {
+  .container {
+    max-width: 7680px;
+    /* 8K UHD */
+  }
+}
+
+.group:has([role='button']) .VPSidebarItem.level-0 .items {
+  padding-left: 16px !important;
+  border-left: 1px solid var(--vp-c-divider);
+  border-radius: 2px;
+  transition: background-color 0.25s;
+}
+
+.html-body {
+  * {
+    box-sizing: border-box;
+  }
+
+  width: var(--vw);
+  height: var(--vh);
+  margin-bottom: 10px;
+
+  .tabs,
+  .breadcrumb,
+  header,
+  aside,
+  main,
+  footer {
+    background-color: skyblue;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .breadcrumb,
+  aside {
+    background-color: #94d7ed;
+  }
+
+  .tabs,
+  main {
+    background-color: lightblue;
+  }
+}
