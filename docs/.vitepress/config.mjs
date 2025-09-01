@@ -41,12 +41,13 @@ const config = {
     // https://vitepress.dev/reference/default-theme-config
     logo: { src: '/logo.svg', width: 24, height: 24 },
     nav: [
-      { text: '书签', link: '/' },
+      { text: '首页', link: '/' },
       { text: '索引', link: '/indexes/index' },
       { text: '知识点', link: '/points/index' },
       { text: '总结', link: '/posts/index' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/nbaxp' }],
+    outline: [2, 3, 4],
     search: {
       provider: 'local'
     },
