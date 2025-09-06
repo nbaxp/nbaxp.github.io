@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <title>v-loading Demo</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>局部 Loading 示例</h2>
+  <div style="position:relative; width:200px; height:150px; border:1px solid #ccc; margin-bottom:20px;">
+    <p>这里是内容</p>
+    <button onclick="alert('click')">Click</button>
+    <v-loading active />
+  </div>
+
+  <h2>点击按钮切换 Loading</h2>
+  <button id="toggle">切换加载</button>
+  <div style="position:relative; width:300px; height:200px; border:1px solid #ccc; margin-top:10px;">
+    <p>这里是另一块内容</p>
+    <button onclick="alert('click')">Click</button>
+    <v-loading />
+  </div>
+
+  <script>
+    class VLoading extends HTMLElement {
+      static get observedAttributes() {
+        return ["active"];
+      }
+
+      constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: "open" });
+
+        shadow.innerHTML = `
+          <style>
+            :host {
+              display: none;
+              position: absolute;
+              inset: 0;
+              background: rgba(255, 255, 255, 0.6);
+              justify-content: center;
+              align-items: center;
+              z-index: 9999;
+            }
+            :host([active]) {
+              display: flex;
+            }
+            svg {
+              width: 50px;
+              height: 50px;
+            }
+            circle {
+              fill: none;
+              stroke: #409eff;
+              stroke-width: 4;
+              stroke-linecap: round;
+              stroke-dasharray: 90;
+              stroke-dashoffset: 60;
+              animation: spin 1s linear infinite;
+            }
+            @keyframes spin {
+              0%   { stroke-dashoffset: 90; transform: rotate(0deg);   transform-origin: 50% 50%; }
+              100% { stroke-dashoffset: 0;  transform: rotate(360deg); transform-origin: 50% 50%; }
+            }
+          </style>
+          <svg viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20"></circle>
+          </svg>
+        `;
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === "active") {
+          this.style.display = this.hasAttribute("active") ? "flex" : "none";
+        }
+      }
+    }
+
+    customElements.define("v-loading", VLoading);
+
+    // 按钮事件：切换 active
+    const toggleBtn = document.getElementById("toggle");
+    const loader = document.querySelectorAll("v-loading")[1];
+    toggleBtn.addEventListener("click", () => {
+      if (loader.hasAttribute("active")) {
+        loader.removeAttribute("active");
+      } else {
+        loader.setAttribute("active", "");
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,80 +1,113 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>SVG图标组件示例</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
+
+<head>
+  <meta charset="utf-8" />
+  <title>SVG图标组件示例</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .icon-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="icon-box">
+    <svg-icon href="/logo.svg" style="color: #4caf50; font-size: 2em"></svg-icon>
+    <svg-icon href="/logo.svg" style="color: #4caf50; font-size: 2em"></svg-icon>
+    <svg-icon href="/logo.svg" style="color: #4caf50; font-size: 2em"></svg-icon>
+  </div>
+
+  <script>
+    class SvgIcon extends HTMLElement {
+      static cache = new Map() // url -> Promise<string>
+
+      static get observedAttributes() { return ['href'] }
+
+      constructor() {
+        super()
+        this._ac = null
+        this.attachShadow({ mode: 'open' }).innerHTML = `
+      <style>:host{display:inline-block;width:1em;height:1em}svg{width:100%;height:100%;fill:currentColor}</style>
+      <span id="icon" aria-hidden="true"></span>`
       }
-      .icon-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        border: 1px solid #eee;
-        border-radius: 8px;
+
+      connectedCallback() { this._load() }
+      attributeChangedCallback() { this._load() }
+      disconnectedCallback() { if (this._ac) this._ac.abort() }
+
+      async _fetchSvg(url) {
+        if (!SvgIcon.cache.has(url)) {
+          const p = (async () => {
+            const r = await fetch(url, { cache: 'force-cache' })
+            if (!r.ok) throw new Error(`Failed to fetch ${url}: ${r.status}`)
+            return await r.text()
+          })()
+          SvgIcon.cache.set(url, p)
+        }
+        return SvgIcon.cache.get(url)
       }
-    </style>
-  </head>
-  <body>
-    <div class="icon-box">
-      <svg-icon href="/logo.svg" style="color: #4caf50; font-size: 2em"></svg-icon>
-      <svg-icon href="/logo.svg" style="color: #4caf50; font-size: 2em"></svg-icon>
-      <svg-icon href="/logo.svg" style="color: #4caf50; font-size: 2em"></svg-icon>
-    </div>
 
-    <script>
-      class SvgIcon extends HTMLElement {
-        static cache = new Map()
-
-        constructor() {
-          super()
-          this.attachShadow({ mode: 'open' })
-          this.shadowRoot.innerHTML = `
-          <style>
-            :host { display: inline-block; width: 1em; height: 1em; }
-            svg { width: 100%; height: 100%; fill: currentColor; }
-          </style>
-          <div id="icon"></div>
-        `
-        }
-
-        connectedCallback() {
-          this.loadIcon()
-        }
-
-        async loadIcon() {
-          const href = this.getAttribute('href')
-          if (!href) return
-
-          const [url, id] = href.split('#')
-
-          try {
-            let svg = SvgIcon.cache.get(url) || (await (await fetch(url)).text())
-            if (!SvgIcon.cache.has(url)) SvgIcon.cache.set(url, svg)
-
-            if (id) {
-              const doc = new DOMParser().parseFromString(svg, 'image/svg+xml')
-              const symbol = doc.getElementById(id)
-              if (symbol) {
-                this.shadowRoot.getElementById('icon').innerHTML = `
-                <svg viewBox="${symbol.getAttribute('viewBox')}">
-                  <use href="#${id}"></use>
-                </svg>
-              `
-                return
-              }
+      async _load() {
+        const href = this.getAttribute('href')
+        if (!href) return
+        const [url, id] = href.split('#')
+        // handle "#id" case => try find in document
+        try {
+          if (!url && id) {
+            const symbol = document.getElementById(id)
+            if (symbol && symbol.namespaceURI === 'http://www.w3.org/2000/svg') {
+              this._renderInline(symbol)
+              return
             }
-            this.shadowRoot.getElementById('icon').innerHTML = svg
-          } catch (e) {
-            console.error('SVG加载失败:', e)
+            throw new Error('Local symbol not found')
           }
+
+          // fetch with abort controller
+          this._ac = new AbortController()
+          const svgText = await this._fetchSvg(url).then(p => p) // p is Promise<string>
+          // parse and handle symbol or whole svg
+          const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml')
+          if (id) {
+            const symbol = doc.getElementById(id)
+            if (symbol) {
+              this._renderInline(symbol)
+              return
+            }
+          }
+          // fallback: inline root svg (safer than raw innerHTML)
+          const root = doc.querySelector('svg')
+          if (root) {
+            this.shadowRoot.getElementById('icon').innerHTML = root.outerHTML
+          } else {
+            throw new Error('No <svg> found in fetched content')
+          }
+        } catch (err) {
+          console.error('SvgIcon load error:', err)
+          this.shadowRoot.getElementById('icon').textContent = ''
+        } finally {
+          this._ac = null
         }
       }
 
-      customElements.define('svg-icon', SvgIcon)
-    </script>
-  </body>
+      _renderInline(symbol) {
+        const viewBox = symbol.getAttribute('viewBox') || ''
+        const inner = symbol.innerHTML
+        this.shadowRoot.getElementById('icon').innerHTML = `<svg ${viewBox ? `viewBox="${viewBox}"` : ''}>${inner}</svg>`
+      }
+    }
+    customElements.define('svg-icon', SvgIcon)
+  </script>
+</body>
+
 </html>

@@ -1,0 +1,45 @@
+<html>
+
+<body>
+  <!--调用-->
+  <my-element>Web Component Demo</my-element>
+  <script>
+    //定义 Web Component
+    class MyElement extends HTMLElement {
+      // 监听的属性变化
+      static observedAttributes = ["size"];
+      constructor() {
+        super()
+        const shadow = this.attachShadow({ mode: 'open' })
+        //:host 选择Web Component 当前元素
+        shadow.innerHTML = `
+        <style>
+          :host{
+            color: red;
+          }
+        </style>
+        <div>${this.innerHTML}</div>
+        `
+      }
+      connectedCallback() {
+        console.log('connected')
+      }
+
+      disconnectedCallback() {
+        console.log('disconnected')
+      }
+
+      adoptedCallback() {
+        console.log('adopted')
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        console.log(`attributeChanged: ${name}, ${oldValue} -> ${newValue}`)
+      }
+    }
+    //注册 Web Component
+    customElements.define('my-element', MyElement)
+  </script>
+</body>
+
+</html>

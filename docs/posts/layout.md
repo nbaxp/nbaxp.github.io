@@ -1,8 +1,27 @@
 # Web 前端布局
 
-## 使用 FlexBox 3 个属性实现常见页面布局!
+## FlexBox CSS 属性分类
 
-FlexBox 弹性盒子是一种用于按行或按列布局元素的一维布局方法。元素可以膨胀以填充额外的空间，收缩以适应更小的空间。
+```mermaid
+mindmap
+display: flex|inline-flex
+  容器
+    flex-flow
+      flex-direction: row
+        主轴方向
+      flex-wrap: nowrap
+        是否换行
+  子元素
+    flex
+      flex-grow: 0
+        放大比例
+      flex-shrink: 1
+        缩小比例
+      flex-basis: auto
+        基础长度
+```
+
+## Tailwind CSS 布局相关工具类
 
 ```css
 .flex {
@@ -12,8 +31,135 @@ FlexBox 弹性盒子是一种用于按行或按列布局元素的一维布局方
   flex-direction: column; /*应用在容器元素，设置主轴方向为垂直*/
 }
 .flex-1 {
-  flex: 1; /*应用在容器子级元素，设置自动填充剩余空间*/
+  flex: 1; /*应用在子元素，设置自动填充*/
 }
+.shink-0 {
+  flex-shrink: 0; /*应用在子元素，设置禁止缩小*/
+}
+.overflow-hidden {
+  overflow: hidden; /*应用在容器元素，设置溢出隐藏*/
+}
+.overflow-auto {
+  overflow: auto; /*应用在容器元素，设置溢出自动*/
+}
+```
+
+## 左右布局
+
+- 默认为左右布局
+- 父元素添加`overflow-hidden`防止溢出
+- 子元素添加`overflow-auto`设置溢出自动滚动
+- 子元素添加`flex-1`或`shink-0`设置自动填充或禁止缩小
+
+:::demo
+
+```vue
+<template>
+  <div class="box flex overflow-hidden">
+    <div class="item shink-0">禁止缩放</div>
+    <div class="item flex-1 overflow-auto">
+      <div style="width:100vw;height:100vh">自动填充</div>
+    </div>
+    <div class="item shink-0">禁止缩放</div>
+  </div>
+</template>
+<style scoped>
+section {
+  width: 100%;
+  height: 200px;
+}
+.box {
+  width: 100%;
+  height: 200px;
+  gap: 0.5rem;
+  .item {
+    padding: 1rem;
+    background: lightblue;
+  }
+}
+</style>
+```
+
+:::
+
+## 上下布局
+
+添加`flex-col`设置垂直布局
+
+:::demo
+
+```vue
+<template>
+  <div class="box flex flex-col overflow-hidden">
+    <div class="item shink-0">禁止缩放</div>
+    <div class="item flex-1 overflow-auto">
+      <div style="width:100vw;height:100vh">自动填充</div>
+    </div>
+    <div class="item shink-0">禁止缩放</div>
+  </div>
+</template>
+<style scoped>
+section {
+  width: 100%;
+  height: 200px;
+}
+.box {
+  width: 100%;
+  height: 200px;
+  gap: 1rem;
+  .item {
+    padding: 1rem;
+    background: lightblue;
+  }
+}
+</style>
+```
+
+:::
+
+## 常见布局
+
+:::demo
+
+```vue
+<template>
+  <div class="box flex flex-col overflow-hidden">
+    <div class="item shink-0">Header</div>
+    <div class="item flex-1 flex">
+      <div class="itemshink-0">Aside</div>
+      <div class="item flex-1 flex flex-col">
+        <div class="item flex-1">Main</div>
+        <div class="item shink-0">Footer</div>
+      </div>
+    </div>
+    <div class="item shink-0">Footer</div>
+  </div>
+</template>
+<style scoped>
+section {
+  width: 100%;
+  height: 200px;
+}
+.box {
+  width: 100%;
+  height: 200px;
+  gap: 1rem;
+  .item {
+    padding: 1rem;
+    background: lightblue;
+  }
+}
+</style>
+```
+
+:::
+
+:::demo
+
+```vue
+<template>
+  <div class="flex"></div>
+</template>
 ```
 
 :::demo
